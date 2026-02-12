@@ -24,7 +24,7 @@ const CreateTweet = ({ createTweet }) => {
         }
         autosize
         minRows={4}
-        style={{ width: "50%", marginBottom: "30px" }}
+        style={{ width: "50%", marginBottom: "30px", marginTop: "30px" }}
         value={tweet}
         onChange={(e) => setTweet(e.target.value)}
       />
