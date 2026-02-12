@@ -8,7 +8,8 @@ import { getTweets } from './utils/api'
 
 function App() {
   const savedTweets = localStorage.getItem('tweets');
-  const [tweets, setTweets] = useState(savedTweets ? JSON.parse(savedTweets) : []);
+  const [userTweets, setUserTweets] = useState(savedTweets ? JSON.parse(savedTweets) : []);
+  const [serverTweets, setServerTweets] = useState([]);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -19,19 +20,19 @@ function App() {
       userName: "Yossi_the_King", // tweet.userName 
       date: new Date().toISOString(), 
     };
-    setTweets([...tweets, newTweet])
+    setUserTweets([...userTweets, newTweet])
   }
 
   useEffect(() => {
-    localStorage.setItem('tweets', JSON.stringify(tweets));
-  }, [tweets]);
+    localStorage.setItem('tweets', JSON.stringify(userTweets));
+  }, [userTweets]);
 
   useEffect(() => {
     const fetchTweets = async () => {
       setLoading(true)
       try {
         const tweets = await getTweets();
-        setTweets(tweets);
+        setServerTweets(tweets);
       } catch (error) {
         setError(error)
       } finally {
@@ -41,13 +42,20 @@ function App() {
     fetchTweets();
   }, []);
 
-  const sortedTweetsByTime = [...tweets].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const allTweets = [...userTweets, ...serverTweets];
+  const sortedTweetsByTime = allTweets.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
     <>
-      {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4> }
-      {loading ? <p>Loading...</p> : <CreateTweet createTweet={createTweet}/>}
-      <TweetList tweets={sortedTweetsByTime}/>
+      {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4>}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <CreateTweet createTweet={createTweet} />
+          <TweetList tweets={sortedTweetsByTime} />
+        </>
+      )}
     </>
   )
 }
