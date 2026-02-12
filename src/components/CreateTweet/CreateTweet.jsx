@@ -11,7 +11,7 @@ const CreateTweet = () => {
       formatOnBlur
       autosize
       minRows={4}
-      style={{ width: '100%' }}
+      style={{ width: '50%', marginBottom: '30px' }}
     />
   )
 }
