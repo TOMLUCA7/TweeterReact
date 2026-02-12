@@ -6,6 +6,7 @@ import TweetList from './components/TweetList/TweetList'
 import { Loader } from '@mantine/core';
 
 import { getTweets } from './utils/api'
+import { Route } from 'react-router';
 
 function App() {
   const savedTweets = localStorage.getItem('tweets');
@@ -48,13 +49,14 @@ function App() {
 
   return (
     <>
+      <NavBar />
       {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4>}
       {loading ? (
         <Loader color="blue" size="xl" />
       ) : (
         <>
-          <CreateTweet createTweet={createTweet} />
-          <TweetList tweets={sortedTweetsByTime} />
+          <Route path="/" element={<CreateTweet createTweet={createTweet} />} />
+          <Route path="/" element={<TweetList tweets={sortedTweetsByTime} />} />
         </>
       )}
     </>
