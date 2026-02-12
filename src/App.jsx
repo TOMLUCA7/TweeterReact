@@ -8,6 +8,8 @@ import { getTweets } from './utils/api'
 
 function App() {
   const [tweets, setTweets] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const createTweet = (tweet) => {
     const newTweet = {
@@ -21,8 +23,15 @@ function App() {
 
   useEffect(() => {
     const fetchTweets = async () => {
-      const tweets = await getTweets();
-      setTweets(tweets);
+      setLoading(true)
+      try {
+        const tweets = await getTweets();
+        setTweets(tweets);
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     };
     fetchTweets();
   }, []);
@@ -31,7 +40,8 @@ function App() {
 
   return (
     <>
-      <CreateTweet createTweet={createTweet}/>
+      {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4> }
+      {loading ? <p>Loading...</p> : <CreateTweet createTweet={createTweet}/>}
       <TweetList tweets={tweets}/>
     </>
   )
