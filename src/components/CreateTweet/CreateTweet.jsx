@@ -9,6 +9,7 @@ const CreateTweet = ({createTweet}) => {
   const isTooLong = tweet.length > 140;
 
   const addTweet = () => {
+    if(!tweet) return alert('Please enter a tweet')
     createTweet(tweet)
     setTweet('')
   }
@@ -18,7 +19,6 @@ const CreateTweet = ({createTweet}) => {
       <JsonInput
         label="Tweet"
         placeholder="Enter your tweet"
-        validationError="Invalid JSON"
         error={isTooLong && 'The tweet is too long can\'t be more than 140 characters'}
         formatOnBlur
         autosize

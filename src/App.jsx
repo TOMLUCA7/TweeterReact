@@ -8,7 +8,13 @@ function App() {
   const [tweets, setTweets] = useState([])
 
   const createTweet = (tweet) => {
-    setTweets([...tweets, {tweet}])
+    const newTweet = {
+      id: Date.now(), 
+      content: tweet,
+      userName: "Yossi_the_King", 
+      date: new Date().toISOString(), 
+    };
+    setTweets([...tweets, newTweet])
   }
 
 
@@ -16,7 +22,7 @@ function App() {
   return (
     <>
       <CreateTweet createTweet={createTweet}/>
-      <TweetList/>
+      <TweetList tweets={tweets}/>
     </>
   )
 }
