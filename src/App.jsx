@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import CreateTweet from './components/CreateTweet/CreateTweet'
 import TweetList from './components/TweetList/TweetList'
+import { Loader } from '@mantine/core';
 
 import { getTweets } from './utils/api'
 
@@ -49,7 +50,7 @@ function App() {
     <>
       {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4>}
       {loading ? (
-        <p>Loading...</p>
+        <Loader color="blue" size="xl" />
       ) : (
         <>
           <CreateTweet createTweet={createTweet} />
