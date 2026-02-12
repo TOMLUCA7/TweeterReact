@@ -7,10 +7,8 @@ import TweetList from './components/TweetList/TweetList'
 import { getTweets } from './utils/api'
 
 function App() {
-  const [tweets, setTweets] = useState(() => {
-    const savedTweets = localStorage.getItem('tweets');
-    return savedTweets ? JSON.parse(savedTweets) : [];
-  });
+  const savedTweets = localStorage.getItem('tweets');
+  const [tweets, setTweets] = useState(savedTweets ? JSON.parse(savedTweets) : []);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
