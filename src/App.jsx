@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 
 import './App.css'
-import CreateTweet from './components/CreateTweet/CreateTweet'
-import TweetList from './components/TweetList/TweetList'
+import NavBar from './components/NavBar/NavBar'
 import { Loader } from '@mantine/core';
 
 import { getTweets } from './utils/api'
-import { Route } from 'react-router';
+import { Route, Routes } from 'react-router';
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const savedTweets = localStorage.getItem('tweets');
@@ -54,10 +55,10 @@ function App() {
       {loading ? (
         <Loader color="blue" size="xl" />
       ) : (
-        <>
-          <Route path="/" element={<CreateTweet createTweet={createTweet} />} />
-          <Route path="/" element={<TweetList tweets={sortedTweetsByTime} />} />
-        </>
+        <Routes>
+          <Route path="/" element={<HomePage tweets={sortedTweetsByTime} createTweet={createTweet} />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
       )}
     </>
   )

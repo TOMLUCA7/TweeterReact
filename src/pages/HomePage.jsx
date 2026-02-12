@@ -1,11 +1,13 @@
-import React from 'react'
+import CreateTweet from "../components/CreateTweet/CreateTweet";
+import TweetList from "../components/TweetList/TweetList";
 
-const HomePage = () => {
+const HomePage = ({ tweets, createTweet }) => {
   return (
     <>
-    <h1>HomePage</h1>
+      <CreateTweet createTweet={createTweet} />
+      <TweetList tweets={tweets} />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
