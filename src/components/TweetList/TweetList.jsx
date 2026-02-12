@@ -1,28 +1,35 @@
-import React from 'react'
+import React from "react";
 
-import { Card, Text, Badge, Group } from '@mantine/core';
+import { Card, Text, Badge, Group } from "@mantine/core";
 
 const TweetList = ({ tweets }) => {
   return (
     <>
-      {tweets.map((tweet, index) => (
-        <Card key={index} shadow="sm" padding="lg" radius="md" withBorder style={{ width: '50%', marginBottom: '30px' }}>
-
+      {tweets.map((tweet) => (
+        <Card
+          key={tweet.id}
+          shadow="sm"
+          padding="lg"
+          radius="md"
+          withBorder
+          style={{ width: "50%", marginBottom: "30px" }}
+        >
           <Group justify="space-between" mt="md" mb="xs">
-            <Text color='blue' fw={700}>User</Text>
+            <Text color="blue" fw={700}>
+              {tweet.userName}
+            </Text>
             <Badge color="green" variant="light">
-              {new Date().toLocaleString()}
+              {tweet.date}
             </Badge>
           </Group>
 
           <Text size="sm" c="dimmed">
-            {tweet}
+            {tweet.content}
           </Text>
-
         </Card>
       ))}
     </>
-  )
-}
+  );
+};
 
-export default TweetList
+export default TweetList;
