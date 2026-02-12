@@ -5,11 +5,17 @@ import CreateTweet from './components/CreateTweet/CreateTweet'
 import TweetList from './components/TweetList/TweetList'
 
 function App() {
-  
+  const [tweets, setTweets] = useState([])
+
+  const createTweet = (tweet) => {
+    setTweets([...tweets, {tweet}])
+  }
+
+
 
   return (
     <>
-      <CreateTweet/>
+      <CreateTweet createTweet={createTweet}/>
       <TweetList/>
     </>
   )
