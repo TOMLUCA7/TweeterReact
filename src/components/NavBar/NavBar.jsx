@@ -15,10 +15,10 @@ const NavBar = () => {
     >
       <Tabs.List>
         <Tabs.Tab value="home">
-          <NavLink to="/">Home</NavLink>
+          <NavLink style={{ textDecoration: "none", color:'blue' }} to="/">Home</NavLink>
         </Tabs.Tab>
         <Tabs.Tab value="profile">
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink style={{ textDecoration: "none", color:'blue' }}  to="/profile">Profile</NavLink>
         </Tabs.Tab>
       </Tabs.List>
     </Tabs>
