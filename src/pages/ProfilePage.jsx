@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { TextInput, Button } from "@mantine/core";
 
-const ProfilePage = () => {
-  const [userName, setUserName] = useState("");
-
+const ProfilePage = ({ userName, setUserName }) => {
   return (
     <>
       <TextInput
@@ -25,6 +22,7 @@ const ProfilePage = () => {
           marginTop: "30px",
           marginLeft: "30px",
         }}
+        onClick={() => alert(`${userName} Saved`)}
       >
         Save
       </Button>

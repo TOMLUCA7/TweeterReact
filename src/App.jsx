@@ -15,12 +15,13 @@ function App() {
   const [serverTweets, setServerTweets] = useState([]);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [userName, setUserName] = useState(localStorage.getItem('userName'));
 
   const createTweet = (tweet) => {
     const newTweet = {
       id: Date.now(), 
       content: tweet,
-      userName: "Yossi_the_King", // tweet.userName 
+      userName: userName, 
       date: new Date().toISOString(), 
     };
     setUserTweets([...userTweets, newTweet])
@@ -29,6 +30,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('tweets', JSON.stringify(userTweets));
   }, [userTweets]);
+
+  useEffect(() => {
+    localStorage.setItem('userName', userName);
+  }, [userName]);
 
   useEffect(() => {
     const fetchTweets = async () => {
@@ -57,7 +62,7 @@ function App() {
       ) : (
         <Routes>
           <Route path="/" element={<HomePage tweets={sortedTweetsByTime} createTweet={createTweet} />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage userName={userName} setUserName={setUserName} />} />
         </Routes>
       )}
     </>
