@@ -44,6 +44,10 @@ export const TweetsProvider = ({ children }) => {
       }
     };
     fetchTweets();
+
+    const interval = setInterval(fetchTweets, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const allTweets = [...userTweets, ...serverTweets];
