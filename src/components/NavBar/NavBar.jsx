@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 import { Tabs } from "@mantine/core";
 
 const NavBar = () => {
@@ -15,10 +15,10 @@ const NavBar = () => {
     >
       <Tabs.List>
         <Tabs.Tab value="home">
-          <NavLink style={{ textDecoration: "none", color:'blue' }} to="/">Home</NavLink>
+          <Link style={{ textDecoration: "none", color:'blue' }} to="/">Home</Link>
         </Tabs.Tab>
         <Tabs.Tab value="profile">
-          <NavLink style={{ textDecoration: "none", color:'blue' }}  to="/profile">Profile</NavLink>
+          <Link style={{ textDecoration: "none", color:'blue' }}  to="/profile">Profile</Link>
         </Tabs.Tab>
       </Tabs.List>
     </Tabs>

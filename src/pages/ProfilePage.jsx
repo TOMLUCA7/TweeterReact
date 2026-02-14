@@ -4,6 +4,13 @@ import { TweetsContext } from "../utils/useContext";
 
 const ProfilePage = () => {
   const { userName, setUserName } = useContext(TweetsContext);
+
+  const enterName = () => {
+    if (!userName) return alert("Please enter a name");
+    alert(`${userName} Saved`);
+  };
+
+
   return (
     <>
       <TextInput
@@ -25,7 +32,7 @@ const ProfilePage = () => {
           marginTop: "30px",
           marginLeft: "30px",
         }}
-        onClick={() => alert(`${userName} Saved`)}
+        onClick={enterName}
       >
         Save
       </Button>
