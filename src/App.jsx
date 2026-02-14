@@ -1,72 +1,30 @@
-import { useState, useEffect } from 'react'
+import "./App.css";
 
-import './App.css'
-import NavBar from './components/NavBar/NavBar'
-import { Loader } from '@mantine/core';
+import { Loader } from "@mantine/core";
+import { useContext } from "react";
+import { TweetsContext } from "./utils/useContext";
+import { Route, Routes } from "react-router";
 
-import { getTweets } from './utils/api'
-import { Route, Routes } from 'react-router';
+import NavBar from "./components/NavBar/NavBar";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-  const savedTweets = localStorage.getItem('tweets');
-  const [userTweets, setUserTweets] = useState(savedTweets ? JSON.parse(savedTweets) : []);
-  const [serverTweets, setServerTweets] = useState([]);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [userName, setUserName] = useState(localStorage.getItem('userName'));
-
-  const createTweet = (tweet) => {
-    const newTweet = {
-      id: Date.now(), 
-      content: tweet,
-      userName: userName, 
-      date: new Date().toISOString(), 
-    };
-    setUserTweets([...userTweets, newTweet])
-  }
-
-  useEffect(() => {
-    localStorage.setItem('tweets', JSON.stringify(userTweets));
-  }, [userTweets]);
-
-  useEffect(() => {
-    localStorage.setItem('userName', userName);
-  }, [userName]);
-
-  useEffect(() => {
-    const fetchTweets = async () => {
-      setLoading(true)
-      try {
-        const tweets = await getTweets();
-        setServerTweets(tweets);
-      } catch (error) {
-        setError(error)
-      } finally {
-        setLoading(false)
-      }
-    };
-    fetchTweets();
-  }, []);
-
-  const allTweets = [...userTweets, ...serverTweets];
-  const sortedTweetsByTime = allTweets.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+  const { error, loading } = useContext(TweetsContext);
   return (
     <>
-      <NavBar />
-      {error && <h4 style={{color: 'red'}}>Error: {error.message}</h4>}
-      {loading ? (
-        <Loader color="blue" size="xl" />
-      ) : (
-        <Routes>
-          <Route path="/" element={<HomePage tweets={sortedTweetsByTime} createTweet={createTweet} />} />
-          <Route path="/profile" element={<ProfilePage userName={userName} setUserName={setUserName} />} />
-        </Routes>
-      )}
+        <NavBar />
+        {error && <h4 style={{ color: "red" }}>Error: {error.message}</h4>}
+        {loading ? (
+          <Loader color="blue" size="xl" />
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
+        )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

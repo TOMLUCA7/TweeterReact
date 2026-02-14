@@ -2,8 +2,11 @@ import React, { useState } from "react";
 
 import { Textarea } from "@mantine/core";
 import { Button } from "@mantine/core";
+import { useContext } from "react";
+import { TweetsContext } from "../../utils/useContext";
 
-const CreateTweet = ({ createTweet }) => {
+const CreateTweet = () => {
+  const { createTweet } = useContext(TweetsContext);
   const [tweet, setTweet] = useState("");
 
   const isTooLong = tweet.length > 140;

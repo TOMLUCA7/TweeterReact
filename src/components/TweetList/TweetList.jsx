@@ -1,11 +1,12 @@
-import React from "react";
-
 import { Card, Text, Badge, Group } from "@mantine/core";
+import { useContext } from "react";
+import { TweetsContext } from "../../utils/useContext";
 
-const TweetList = ({ tweets }) => {
+const TweetList = () => {
+  const { sortedTweetsByTime } = useContext(TweetsContext);
   return (
     <>
-      {tweets.map((tweet) => (
+      {sortedTweetsByTime.map((tweet) => (
         <Card
           key={tweet.id}
           shadow="sm"

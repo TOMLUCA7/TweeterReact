@@ -1,6 +1,9 @@
 import { TextInput, Button } from "@mantine/core";
+import { useContext } from "react";
+import { TweetsContext } from "../utils/useContext";
 
-const ProfilePage = ({ userName, setUserName }) => {
+const ProfilePage = () => {
+  const { userName, setUserName } = useContext(TweetsContext);
   return (
     <>
       <TextInput

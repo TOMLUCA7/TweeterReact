@@ -1,11 +1,11 @@
 import CreateTweet from "../components/CreateTweet/CreateTweet";
 import TweetList from "../components/TweetList/TweetList";
 
-const HomePage = ({ tweets, createTweet }) => {
+const HomePage = () => {
   return (
     <>
-      <CreateTweet createTweet={createTweet} />
-      <TweetList tweets={tweets} />
+      <CreateTweet />
+      <TweetList />
     </>
   );
 };
