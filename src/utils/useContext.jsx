@@ -32,22 +32,25 @@ export const TweetsProvider = ({ children }) => {
   }, [userName]);
 
   useEffect(() => {
-    const fetchTweets = async () => {
-      setLoading(true);
+    const fetchTweets = async (isInitial) => {
+      if (isInitial) setLoading(true); 
       try {
         const tweets = await getTweets();
         setServerTweets(tweets);
       } catch (error) {
         setError(error);
       } finally {
-        setLoading(false);
+        if (isInitial) setLoading(false);
       }
     };
-    fetchTweets();
 
-    const interval = setInterval(fetchTweets, 10000);
+    fetchTweets(true);
 
-    return () => clearInterval(interval);
+    const getIntervalTweets = setInterval(() => {
+      fetchTweets(false);
+    }, 10000);
+
+    return () => clearInterval(getIntervalTweets);
   }, []);
 
   const allTweets = [...userTweets, ...serverTweets];
