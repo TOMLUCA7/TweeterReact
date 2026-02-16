@@ -1,27 +1,56 @@
-import { Link } from "react-router";
-import { Tabs } from "@mantine/core";
+import { useState, useContext, useEffect } from 'react';
+import { Burger, Container, Group, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import classes from './HeaderSimple.module.css';
+import { Link, useLocation } from 'react-router';
+import { TweetsContext } from '../../utils/useContext';
+
+const links = [
+  { link: '/', label: 'Home' },
+  { link: '/profile', label: 'Profile' },
+];
 
 const NavBar = () => {
-  return (
-    <Tabs
-      defaultValue="home"
-      style={{
-        backgroundColor: "#f5f5f5",
-        padding: "10px",
-        borderRadius: "10px",
-        width: "50%",
-        margin: "30px",
-      }}
+  const { onLogout } = useContext(TweetsContext);
+  const [opened, { toggle }] = useDisclosure(false);
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location.pathname]);
+
+  const items = links.map((link) => (
+    <Link
+      key={link.label}
+      to={link.link}
+      className={classes.link}
+      data-active={active === link.link || undefined}
     >
-      <Tabs.List>
-        <Tabs.Tab value="home">
-          <Link style={{ textDecoration: "none", color:'blue' }} to="/">Home</Link>
-        </Tabs.Tab>
-        <Tabs.Tab value="profile">
-          <Link style={{ textDecoration: "none", color:'blue' }}  to="/profile">Profile</Link>
-        </Tabs.Tab>
-      </Tabs.List>
-    </Tabs>
+      {link.label}
+    </Link>
+  ));
+
+
+  return (
+     <header className={classes.header}>
+      <Container size="md" className={classes.inner}>
+        <Group gap={5} visibleFrom="xs">
+          {items}
+          <Button variant="subtle" color="red" onClick={onLogout}>
+            Logout
+          </Button>
+        </Group>
+
+        <Burger
+          opened={opened}
+          onClick={toggle}
+          hiddenFrom="xs"
+          size="sm"
+          aria-label="Toggle navigation"
+        />
+      </Container>
+    </header>
   );
 };
 

@@ -83,6 +83,12 @@ export const TweetsProvider = ({ children }) => {
     }
   };
 
+  const onLogout = async () => {
+    await supabase.auth.signOut();
+    setUserName("");
+    localStorage.removeItem("userName");
+  };
+
   useEffect(() => {
     const getSession = async () => {
       const {
@@ -106,6 +112,7 @@ export const TweetsProvider = ({ children }) => {
         createTweet,
         setUserName,
         onLogin,
+        onLogout,
       }}
     >
       {children}
