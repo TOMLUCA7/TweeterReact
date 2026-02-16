@@ -10,6 +10,7 @@ export const TweetsProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [userName, setUserName] = useState("");
 
+  
   const fetchTweets = async (isInitial = false) => {
     if (isInitial) setLoading(true);
     try {
@@ -47,8 +48,6 @@ export const TweetsProvider = ({ children }) => {
     }
   };
 
-
-
   useEffect(() => {
     fetchTweets(true);
 
@@ -63,6 +62,21 @@ export const TweetsProvider = ({ children }) => {
     (a, b) => new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0),
   );
 
+  const onLogin = async (email, password) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <TweetsContext.Provider
       value={{
@@ -73,6 +87,7 @@ export const TweetsProvider = ({ children }) => {
         userName,
         createTweet,
         setUserName,
+        onLogin,
       }}
     >
       {children}
