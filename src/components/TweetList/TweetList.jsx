@@ -6,29 +6,34 @@ const TweetList = () => {
   const { sortedTweetsByTime } = useContext(TweetsContext);
   return (
     <>
-      {sortedTweetsByTime.map((tweet) => (
-        <Card
-          key={tweet.id}
-          shadow="sm"
-          padding="lg"
-          radius="md"
-          withBorder
-          style={{ width: "50%", marginBottom: "30px" }}
-        >
-          <Group justify="space-between" mt="md" mb="xs">
-            <Text color="blue" fw={700}>
-              {tweet.userName}
-            </Text>
-            <Badge color="green" variant="light">
-              {tweet.date}
-            </Badge>
-          </Group>
+      {sortedTweetsByTime.length === 0 ? (
+        <Text>No tweets yet</Text>
+      ) : (
+        sortedTweetsByTime.map((tweet) => (
+          <Card
+            key={tweet.id}
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            withBorder
+            style={{ width: "50%", marginBottom: "30px" }}
+          >
+            <Group justify="space-between" mt="md" mb="xs">
+              <Text color="blue" fw={700}>
+                {tweet.useName}
+              </Text>
 
-          <Text size="sm" c="dimmed">
-            {tweet.content}
-          </Text>
-        </Card>
-      ))}
+              <Badge color="green" variant="light">
+                {tweet.date || tweet.created_at}
+              </Badge>
+            </Group>
+
+            <Text size="sm" c="dimmed">
+              {tweet.content}
+            </Text>
+          </Card>
+        ))
+      )}
     </>
   );
 };

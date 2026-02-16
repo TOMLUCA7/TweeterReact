@@ -14,6 +14,7 @@ export const TweetsProvider = ({ children }) => {
     if (isInitial) setLoading(true);
     try {
       const tweets = await getTweets();
+      console.log("Tweets from server:", tweets);
       setServerTweets(tweets);
     } catch (error) {
       setError(error);
@@ -26,7 +27,7 @@ export const TweetsProvider = ({ children }) => {
     try {
       const newTweet = {
         content: tweetContent,
-        userName: userName,
+        useName: userName,
       };
 
       const { data, error } = await supabase
