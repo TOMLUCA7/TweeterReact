@@ -16,9 +16,8 @@ import { Link } from "react-router";
 import { useForm } from "@mantine/form";
 import { TweetsContext } from "../utils/useContext";
 
-export function LoginPage() {
-
-    const { onLogin } = useContext(TweetsContext);
+export default function LoginPage() {
+  const { onLogin } = useContext(TweetsContext);
 
   const form = useForm({
     initialValues: {

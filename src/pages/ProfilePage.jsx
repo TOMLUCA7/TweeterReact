@@ -1,6 +1,7 @@
 import { TextInput, Button } from "@mantine/core";
 import { useContext } from "react";
 import { TweetsContext } from "../utils/useContext";
+import NavBar from "../components/NavBar/NavBar";
 
 const ProfilePage = () => {
   const { userName, setUserName } = useContext(TweetsContext);
@@ -13,6 +14,7 @@ const ProfilePage = () => {
 
   return (
     <>
+      <NavBar />
       <TextInput
         value={userName}
         onChange={(e) => setUserName(e.target.value)}

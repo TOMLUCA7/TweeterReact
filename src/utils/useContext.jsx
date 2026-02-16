@@ -10,7 +10,6 @@ export const TweetsProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [userName, setUserName] = useState("");
 
-  
   const fetchTweets = async (isInitial = false) => {
     if (isInitial) setLoading(true);
     try {
@@ -59,7 +58,9 @@ export const TweetsProvider = ({ children }) => {
   }, []);
 
   const sortedTweetsByTime = [...serverTweets].sort(
-    (a, b) => new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0),
+    (a, b) =>
+      new Date(b.created_at || b.date || 0) -
+      new Date(a.created_at || a.date || 0),
   );
 
   const onLogin = async (email, password) => {
@@ -69,13 +70,30 @@ export const TweetsProvider = ({ children }) => {
         email,
         password,
       });
+
       if (error) throw error;
+
+      setUserName(data.user.email);
+      localStorage.setItem("userName", data.user.email);
     } catch (error) {
       setError(error.message);
+      alert("Login failed: " + error.message);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        setUserName(session.user.email);
+      }
+    };
+    getSession();
+  }, []);
 
   return (
     <TweetsContext.Provider
