@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const { error, loading, userName } = useContext(TweetsContext);
@@ -26,7 +27,10 @@ function App() {
                 <Route path="*" element={<HomePage />} />
               </>
             ) : (
-              <Route path="*" element={<LoginPage />} />
+              <>
+                <Route path="*" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+              </>
             )}
           </Routes>
         </>

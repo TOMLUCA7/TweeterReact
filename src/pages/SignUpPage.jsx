@@ -16,8 +16,8 @@ import { Link } from "react-router";
 import { useForm } from "@mantine/form";
 import { TweetsContext } from "../utils/useContext";
 
-export default function LoginPage() {
-  const { onLogin } = useContext(TweetsContext);
+export default function SignUpPage() {
+  const { onSignUp } = useContext(TweetsContext);
 
   const form = useForm({
     initialValues: {
@@ -32,26 +32,26 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
 
-  function handleLogin() {
+  function handleSignUp() {
     const validation = form.validate();
     if (validation.hasErrors) {
       console.log(validation);
     } else {
       setLoading(true);
-      onLogin(form.values.email, form.values.password);
+      onSignUp(form.values.email, form.values.password);
     }
   }
 
   return (
     <Container size={420} my={40}>
       <Title ta="center" className={classes.title}>
-        Welcome back!
+        Create an account
       </Title>
 
       <Text className={classes.subtitle}>
-        Do not have an account yet?{" "}
-        <Anchor component={Link} to="/signup">
-          Create account
+        Already have an account?{" "}
+        <Anchor component={Link} to="/">
+          Login
         </Anchor>
       </Text>
 
@@ -79,7 +79,7 @@ export default function LoginPage() {
           mt="xl"
           radius="md"
           loading={loading}
-          onClick={handleLogin}
+          onClick={handleSignUp}
         >
           Sign in
         </Button>

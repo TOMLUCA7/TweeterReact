@@ -83,6 +83,38 @@ export const TweetsProvider = ({ children }) => {
     }
   };
 
+  const onSignUp = async (email, password) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          email_redirect_to: window.location.origin,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data.user && !data.session) {
+        alert("Sign up successful! Please check your email for verification.");
+        return;
+      }
+
+      if (data.user) {
+        setUserName(data.user.email);
+        localStorage.setItem("userName", data.user.email);
+        alert("Sign up successful!");
+      }
+
+    } catch (error) {
+      console.error("Sign up error:", error);
+      alert("Sign up failed: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onLogout = async () => {
     await supabase.auth.signOut();
     setUserName("");
@@ -112,6 +144,7 @@ export const TweetsProvider = ({ children }) => {
         createTweet,
         setUserName,
         onLogin,
+        onSignUp,
         onLogout,
       }}
     >
