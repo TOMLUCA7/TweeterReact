@@ -1,49 +1,54 @@
 import { createContext, useState, useEffect } from "react";
 import { getTweets } from "./api";
+import { supabase } from "./supabaseClient";
 
 export const TweetsContext = createContext();
 
 export const TweetsProvider = ({ children }) => {
-  const savedTweets = localStorage.getItem("tweets");
-  const [userTweets, setUserTweets] = useState(
-    savedTweets ? JSON.parse(savedTweets) : [],
-  );
   const [serverTweets, setServerTweets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  const [userName, setUserName] = useState("");
 
-  const createTweet = (tweet) => {
-    const newTweet = {
-      id: Date.now(),
-      content: tweet,
-      userName: userName,
-      date: new Date().toISOString(),
-    };
-    setUserTweets([...userTweets, newTweet]);
+  const fetchTweets = async (isInitial = false) => {
+    if (isInitial) setLoading(true);
+    try {
+      const tweets = await getTweets();
+      setServerTweets(tweets);
+    } catch (error) {
+      setError(error);
+    } finally {
+      if (isInitial) setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    localStorage.setItem("tweets", JSON.stringify(userTweets));
-  }, [userTweets]);
+  const createTweet = async (tweetContent) => {
+    try {
+      const newTweet = {
+        content: tweetContent,
+        userName: userName,
+      };
 
-  useEffect(() => {
-    localStorage.setItem("userName", userName);
-  }, [userName]);
+      const { data, error } = await supabase
+        .from("tweets")
+        .insert([newTweet])
+        .select();
 
-  useEffect(() => {
-    const fetchTweets = async (isInitial) => {
-      if (isInitial) setLoading(true); 
-      try {
-        const tweets = await getTweets();
-        setServerTweets(tweets);
-      } catch (error) {
+      if (error) {
+        console.error("Error creating tweet:", error);
         setError(error);
-      } finally {
-        if (isInitial) setLoading(false);
+      } else if (data) {
+        setServerTweets((prevTweets) => [data[0], ...prevTweets]);
       }
-    };
+    } catch (err) {
+      console.error("Unexpected error creating tweet:", err);
+      setError(err);
+    }
+  };
 
+
+
+  useEffect(() => {
     fetchTweets(true);
 
     const getIntervalTweets = setInterval(() => {
@@ -53,9 +58,8 @@ export const TweetsProvider = ({ children }) => {
     return () => clearInterval(getIntervalTweets);
   }, []);
 
-  const allTweets = [...userTweets, ...serverTweets];
-  const sortedTweetsByTime = allTweets.sort(
-    (a, b) => new Date(b.date) - new Date(a.date),
+  const sortedTweetsByTime = [...serverTweets].sort(
+    (a, b) => new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0),
   );
 
   return (
