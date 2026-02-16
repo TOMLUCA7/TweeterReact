@@ -1,14 +1,15 @@
 import { TextInput, Button } from "@mantine/core";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TweetsContext } from "../utils/useContext";
 import NavBar from "../components/NavBar/NavBar";
 
 const ProfilePage = () => {
   const { userName, setUserName } = useContext(TweetsContext);
+  const [localName, setLocalName] = useState(userName);
 
   const enterName = () => {
-    if (!userName) return alert("Please enter a name");
-    alert(`${userName} Saved`);
+    setUserName(localName);
+    alert(`${localName} Saved`);
   };
 
 
@@ -16,8 +17,8 @@ const ProfilePage = () => {
     <>
       <NavBar />
       <TextInput
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
+        value={localName}
+        onChange={(e) => setLocalName(e.target.value)}
         style={{
           width: "50%",
           marginBottom: "30px",

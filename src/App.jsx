@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   const { error, loading, userName } = useContext(TweetsContext);
@@ -22,13 +23,26 @@ function App() {
           <Routes>
             {userName ? (
               <>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="*" element={<HomePage />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <HomePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  }
+                />
               </>
             ) : (
               <>
-                <Route path="*" element={<LoginPage />} />
+                <Route path="/*" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
               </>
             )}
