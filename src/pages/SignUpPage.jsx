@@ -32,13 +32,14 @@ export default function SignUpPage() {
   });
   const [loading, setLoading] = useState(false);
 
-  function handleSignUp() {
+  async function handleSignUp() {
     const validation = form.validate();
     if (validation.hasErrors) {
       console.log(validation);
     } else {
       setLoading(true);
-      onSignUp(form.values.email, form.values.password);
+      await onSignUp(form.values.email, form.values.password);
+      setLoading(false);
     }
   }
 

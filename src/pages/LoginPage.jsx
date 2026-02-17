@@ -32,13 +32,14 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
 
-  function handleLogin() {
+  async function handleLogin() {
     const validation = form.validate();
     if (validation.hasErrors) {
       console.log(validation);
     } else {
       setLoading(true);
-      onLogin(form.values.email, form.values.password);
+      await onLogin(form.values.email, form.values.password);
+      setLoading(false);
     }
   }
 
