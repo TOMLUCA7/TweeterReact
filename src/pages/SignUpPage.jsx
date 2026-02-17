@@ -37,7 +37,6 @@ export default function SignUpPage() {
     if (validation.hasErrors) {
       console.log(validation);
     } else {
-      setLoading(true);
       await onSignUp(form.values.email, form.values.password);
       setLoading(false);
     }

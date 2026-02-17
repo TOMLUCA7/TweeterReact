@@ -37,9 +37,7 @@ export default function LoginPage() {
     if (validation.hasErrors) {
       console.log(validation);
     } else {
-      setLoading(true);
       await onLogin(form.values.email, form.values.password);
-      setLoading(false);
     }
   }
 

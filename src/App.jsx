@@ -3,7 +3,7 @@ import "./App.css";
 import { Loader } from "@mantine/core";
 import { useContext } from "react";
 import { TweetsContext } from "./utils/useContext";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -39,6 +39,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </>
             ) : (
               <>
