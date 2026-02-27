@@ -1,13 +1,13 @@
-import { useState, useContext, useEffect } from 'react';
-import { Burger, Container, Group, Button } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import classes from './HeaderSimple.module.css';
-import { Link, useLocation } from 'react-router';
-import { TweetsContext } from '../../utils/useContext';
+import { useState, useContext, useEffect } from "react";
+import { Burger, Container, Group, Button } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import classes from "./HeaderSimple.module.css";
+import { Link, useLocation } from "react-router";
+import { TweetsContext } from "../../utils/useContext";
 
 const links = [
-  { link: '/', label: 'Home' },
-  { link: '/profile', label: 'Profile' },
+  { link: "/", label: "Home" },
+  { link: "/profile", label: "Profile" },
 ];
 
 const NavBar = () => {
@@ -31,13 +31,12 @@ const NavBar = () => {
     </Link>
   ));
 
-
   return (
-     <header className={classes.header}>
-      <Container size="md" className={classes.inner}>
-        <Group gap={5} visibleFrom="xs">
+    <header className={classes.header}>
+      <Container size="xl" className={classes.inner} px={{ base: "md", sm: "lg" }}>
+        <Group gap="xs" visibleFrom="xs">
           {items}
-          <Button variant="subtle" color="red" onClick={onLogout}>
+          <Button variant="light" color="red" onClick={onLogout} radius="xl">
             Logout
           </Button>
         </Group>

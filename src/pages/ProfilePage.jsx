@@ -1,4 +1,4 @@
-import { TextInput, Button } from "@mantine/core";
+import { TextInput, Button, Container, Group, Paper, Stack, Title, Text } from "@mantine/core";
 import { useContext, useState } from "react";
 import { TweetsContext } from "../utils/useContext";
 import NavBar from "../components/NavBar/NavBar";
@@ -14,32 +14,35 @@ const ProfilePage = () => {
 
 
   return (
-    <>
+    <div className="app-page">
       <NavBar />
-      <TextInput
-        value={localName}
-        onChange={(e) => setLocalName(e.target.value)}
-        style={{
-          width: "50%",
-          marginBottom: "30px",
-          marginTop: "30px",
-          marginLeft: "30px",
-        }}
-        label="User Name"
-        placeholder="Enter your name"
-      />
-      <Button
-        style={{
-          width: "10%",
-          marginBottom: "30px",
-          marginTop: "30px",
-          marginLeft: "30px",
-        }}
-        onClick={enterName}
-      >
-        Save
-      </Button>
-    </>
+      <Container size="xl" px={{ base: "md", sm: "lg" }} py="xl">
+        <Paper withBorder shadow="sm" radius="lg" p={{ base: "lg", sm: "xl" }}>
+          <Stack gap="lg">
+            <div>
+              <Title order={2}>Profile Settings</Title>
+              <Text c="dimmed" mt={4}>
+                Update how your name appears on your tweets.
+              </Text>
+            </div>
+
+            <TextInput
+              value={localName}
+              onChange={(e) => setLocalName(e.target.value)}
+              label="User Name"
+              placeholder="Enter your name"
+              size="md"
+            />
+
+            <Group justify="flex-end">
+              <Button onClick={enterName} size="md" w={{ base: "100%", sm: "auto" }}>
+                Save
+              </Button>
+            </Group>
+          </Stack>
+        </Paper>
+      </Container>
+    </div>
   );
 };
 

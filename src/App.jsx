@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { Loader } from "@mantine/core";
+import { Center, Loader } from "@mantine/core";
 import { useContext } from "react";
 import { TweetsContext } from "./utils/useContext";
 import { Route, Routes, Navigate } from "react-router";
@@ -17,7 +17,9 @@ function App() {
     <>
       {error && <h4 style={{ color: "red" }}>Error: {error.message}</h4>}
       {loading ? (
-        <Loader color="blue" size="xl" />
+        <Center mih="100vh">
+          <Loader color="blue" size="xl" />
+        </Center>
       ) : (
         <>
           <Routes>

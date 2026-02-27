@@ -1,40 +1,44 @@
-import { Card, Text, Badge, Group } from "@mantine/core";
+import { Card, Text, Badge, Group, Stack, Title, Paper } from "@mantine/core";
 import { useContext } from "react";
 import { TweetsContext } from "../../utils/useContext";
 
 const TweetList = () => {
   const { sortedTweetsByTime } = useContext(TweetsContext);
   return (
-    <>
+    <Stack gap="md">
+      <Title order={3}>Recent Tweets</Title>
       {sortedTweetsByTime.length === 0 ? (
-        <Text>No tweets yet</Text>
+        <Paper withBorder radius="lg" p="lg">
+          <Text c="dimmed">No tweets yet</Text>
+        </Paper>
       ) : (
-        sortedTweetsByTime.map((tweet) => (
-          <Card
-            key={tweet.id}
-            shadow="sm"
-            padding="lg"
-            radius="md"
-            withBorder
-            style={{ width: "50%", marginBottom: "30px" }}
-          >
-            <Group justify="space-between" mt="md" mb="xs">
-              <Text color="blue" fw={700}>
-                {tweet.useName}
+        <Stack gap="md">
+          {sortedTweetsByTime.map((tweet) => (
+            <Card
+              key={tweet.id}
+              shadow="sm"
+              padding="lg"
+              radius="lg"
+              withBorder
+            >
+              <Group justify="space-between" mb="xs">
+                <Text c="blue.7" fw={700}>
+                  {tweet.useName}
+                </Text>
+
+                <Badge color="green" variant="light">
+                  {tweet.date || tweet.created_at}
+                </Badge>
+              </Group>
+
+              <Text size="sm" c="dimmed">
+                {tweet.content}
               </Text>
-
-              <Badge color="green" variant="light">
-                {tweet.date || tweet.created_at}
-              </Badge>
-            </Group>
-
-            <Text size="sm" c="dimmed">
-              {tweet.content}
-            </Text>
-          </Card>
-        ))
+            </Card>
+          ))}
+        </Stack>
       )}
-    </>
+    </Stack>
   );
 };
 

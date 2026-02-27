@@ -1,6 +1,33 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Outfit", "Avenir Next", "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --page-max-width: 1100px;
+  --space-section: clamp(1.5rem, 2vw, 2.25rem);
+  --space-block: clamp(1rem, 1.5vw, 1.5rem);
+  --app-bg: #f6f7fb;
+  --surface-bg: #ffffff;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--app-bg);
+  color: var(--mantine-color-gray-9);
+}
+
+.app-page {
+  width: 100%;
+}
+
+.app-content {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--space-section) clamp(1rem, 3vw, 2rem);
+}

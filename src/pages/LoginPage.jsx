@@ -1,11 +1,11 @@
 import {
   Anchor,
   Button,
-  Checkbox,
   Container,
-  Group,
+  Box,
   Paper,
   PasswordInput,
+  Stack,
   Text,
   TextInput,
   Title,
@@ -42,47 +42,59 @@ export default function LoginPage() {
   }
 
   return (
-    <Container size={420} my={40}>
-      <Title ta="center" className={classes.title}>
-        Welcome back!
-      </Title>
+    <div className="app-page">
+      <Container size="xl" px={{ base: "md", sm: "lg" }} py="xl">
+        <Box maw={520} mx="auto">
+          <Stack gap="lg">
+            <div>
+              <Title ta="center" className={classes.title}>
+                Welcome back!
+              </Title>
 
-      <Text className={classes.subtitle}>
-        Do not have an account yet?{" "}
-        <Anchor component={Link} to="/signup">
-          Create account
-        </Anchor>
-      </Text>
+              <Text className={classes.subtitle}>
+                Do not have an account yet?{" "}
+                <Anchor component={Link} to="/signup">
+                  Create account
+                </Anchor>
+              </Text>
+            </div>
 
-      <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
-        <TextInput
-          label="Email"
-          required
-          radius="md"
-          value={form.values.email}
-          onChange={(e) => form.setFieldValue("email", e.target.value)}
-          error={form.errors.email}
-        />
-        <PasswordInput
-          label="Password"
-          placeholder="Your password"
-          required
-          mt="md"
-          radius="md"
-          value={form.values.password}
-          onChange={(e) => form.setFieldValue("password", e.target.value)}
-          error={form.errors.password}
-        />
-        <Button
-          fullWidth
-          mt="xl"
-          radius="md"
-          loading={loading}
-          onClick={handleLogin}
-        >
-          Sign in
-        </Button>
-      </Paper>
-    </Container>
+            <Paper withBorder shadow="sm" p={{ base: "lg", sm: "xl" }} radius="lg">
+              <Stack gap="md">
+                <TextInput
+                  label="Email"
+                  required
+                  radius="md"
+                  size="md"
+                  value={form.values.email}
+                  onChange={(e) => form.setFieldValue("email", e.target.value)}
+                  error={form.errors.email}
+                />
+                <PasswordInput
+                  label="Password"
+                  placeholder="Your password"
+                  required
+                  radius="md"
+                  size="md"
+                  value={form.values.password}
+                  onChange={(e) => form.setFieldValue("password", e.target.value)}
+                  error={form.errors.password}
+                />
+                <Button
+                  fullWidth
+                  mt="sm"
+                  radius="md"
+                  size="md"
+                  loading={loading}
+                  onClick={handleLogin}
+                >
+                  Sign in
+                </Button>
+              </Stack>
+            </Paper>
+          </Stack>
+        </Box>
+      </Container>
+    </div>
   );
 }
